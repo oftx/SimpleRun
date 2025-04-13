@@ -4,5 +4,11 @@ main: com.oftx.simplerun.SimpleRun
 api-version: '1.20'
 commands:
   run:
-    description: 快速跑路
+    description: 快速跑路（退出游戏）
     usage: /run
+  exit:
+    description: 退出游戏
+    usage: /exit
+  quit:
+    description: 退出游戏
+    usage: /quit

@@ -11,8 +11,9 @@ public class SimpleRun extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        // 注册 /run 命令的执行器
         this.getCommand("run").setExecutor(new RunCommandExecutor());
+        this.getCommand("exit").setExecutor(new RunCommandExecutor());
+        this.getCommand("quit").setExecutor(new RunCommandExecutor());
     }
 
     @Override
@@ -29,13 +30,17 @@ public class SimpleRun extends JavaPlugin {
             if (sender instanceof Player) {
                 Player player = (Player) sender;
                 String playerName = player.getName();
+                String commandName = command.getName();
 
                 // 广播消息给所有玩家
-                String message = "<" + playerName + "> /run";
-                Bukkit.broadcastMessage(message);
+                if (commandName.equals("run")) {
+                    String message = "<" + playerName + "> /run";
+                    Bukkit.broadcastMessage(message);
+                    player.kickPlayer("§a跑路成功§r");
+                } else if (commandName.equals("exit") || commandName.equals("quit")) {
+                    player.kickPlayer("§a已退出游戏，再见！§r");
+                }
 
-                // 断开玩家连接
-                player.kickPlayer("§a跑路成功§r");
                 return true;
             } else {
                 sender.sendMessage("This command can only be executed by a player.");
